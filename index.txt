@@ -1,0 +1,186 @@
+vCard - Personal Portfolio
+
+# sidebar
+
+alt = Magali Courté
+Magali Courté
+Développeuse Logiciels & Applications - Python
+
+Information de contact
+
+Email
+courte.magali@gmail.com
+
+Téléphone
+06 49 73 08 64
+Date de naissance
+26 Octobre 1991
+
+Location
+Rennes, Bretagne, FRANCE
+
+# navbar
+
+A propos
+CV
+Portfolio
+Contact
+
+# about
+
+A propos
+
+Infos
+Après 10 ans en tant qu'ingénieure dans le BTP, je suis actuellement en reconversion professionnelle dans le domaine du développement informatique.
+Passionnée par la création de logiciels et la résolution de problèmes, j'ai choisi de me spécialiser en Python.
+Actuellement en formation pour devenir développeuse et conceptrice de logiciel, et je cherche à étendre mes compétences et à contribuer à des projets intéressants.
+
+## service
+
+What i'm doing
+
+alt = design icon
+Web design
+The most modern and high-quality design made at a professional level.
+
+alt = Web development icon
+Web development
+High-quality development of sites at the professional level.
+
+alt = mobile app icon
+Mobile apps
+Professional development of applications for iOS and Android.
+
+alt = camera icon
+Photography
+I make high-quality photos of any category at a professional level.
+
+
+
+# resume
+
+CV
+
+Formation
+
+Formation Développeur logiciels et applications - Python
+OpenClassroom
+2023 - 2024 (en cours)
+
+Ingénrieur Bâtiment et Travaux Publics
+Ecole Centrale de Nantes
+2012 - 2016
+
+
+Experience
+
+Modeleuse BIM
+2019 — 2023
+Groupe LEGENDRE
+Réalisation de modèle 3D sur le logiciel REVIT
+• Structure Gros Œuvre pour le service méthodes
+• Réseaux enterrés
+• Corps d’États Techniques
+• Corps d’États Secondaires
+
+Ingénieur Etudes de Prix Gros Oeuvre - Génie Civil
+Groupe LEGENDRE, Legendre Génie Civil, Rennes, France
+2017 — 2019
+• Analyse du dossier de consultation des entreprises, analyse juridique des pièces administratives, évaluation des risques
+• Métrés Gros Œuvre, consultation des sous-traitants et analyse comparative des offres
+• Établissement des frais de chantier en fonction des moyens humains et matériels nécessaires à la réalisation des travaux
+• Participation à la rédaction du mémoire technique
+
+
+Ingénieur Etudes de Prix - Alternance
+Spie Batignolles, Nantes, France
+2012 — 2017
+•Analyse du dossier de consultation des entreprises, analyse juridique des pièces administratives, évaluation des risques 
+• Métrés GO et CES, consultation des sous-traitants et analyse comparative des offres
+•Etablissement des frais de chantier en fonction des moyens humains et matériels nécesaires à la realisation des travaux 
+•Participation à la rédaction du mémoire technique 
+#Projet de fin d’études : Création d’un outil informatique permettant l’estimation des gains et des optimisations potentiels sur un projet en matière d’isolation thermique.#
+
+Compétences
+
+Techniques :
+Programmation : Python
+Développement web : HTML, CSS,  notions de JavaScript
+Analyse de données : Pandas,
+Systèmes d'exploitation : Linux
+Conception de logiciels : UML, architectures logicielles, etc.
+
+Soft-Skills : 
+Travail en équipe
+Résolution de problèmes 
+Adaptabilité 
+Esprit d'analyse 
+Apprentissage continu 
+
+
+
+# portfolio
+
+Portfolio
+
+All
+Web design
+Applications
+Web development
+
+Select category
+All
+Web design
+Applications
+Web development
+
+alt = finance
+Finance
+Web development
+
+alt = orizon
+Orizon
+Web development
+
+alt = fundo
+Fundo
+Web design
+
+alt = brawlhalla
+Brawlhalla
+Applications
+
+alt = dsm.
+DSM.
+Web design
+
+alt = metaspark
+MetaSpark
+Web design
+
+alt = summary
+Summary
+Web development
+
+alt = task manager
+Task Manager
+Applications
+
+alt = arrival
+Arrival
+Web development
+
+
+
+
+# contact
+
+Contact
+
+Formulaire de contact
+
+Nom Prénom
+Adresse email
+Votre message
+
+Envoyez votre message
