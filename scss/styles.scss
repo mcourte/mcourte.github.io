@@ -641,16 +641,16 @@ footer {
 }
 
 .project {
-    position: relative;
-    max-width: 900px;
-    margin: 0 auto 30px auto;
-    overflow: hidden;
-    background: #fff;
-    border-radius: 4px;
+    display: flex;
+    flex-direction: column; /* Arrange image and info vertically */
+    align-items: center;    /* Center align them horizontally */
+    text-align: center;     /* Center text inside .project-info */
 }
 
-.project-image {
-    float: left;
+.project-image img {
+    max-width: 100%; /* Ensure images are responsive */
+    height: auto;
+    margin-bottom: 1rem; /* Add space between image and text */
 }
 
 .project-info {
