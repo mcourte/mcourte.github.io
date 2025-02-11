@@ -647,7 +647,13 @@ footer {
 }
 
 .project-image {
-    width: 150px; /* Taille uniforme pour éviter les décalages */
+    width: 250px; /* Taille uniforme pour éviter les décalages */
+    height: auto;
+    object-fit: cover;
+}
+
+.project-image img{
+    width: 250px; /* Taille uniforme pour éviter les décalages */
     height: auto;
     object-fit: cover;
 }
