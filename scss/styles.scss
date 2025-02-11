@@ -637,47 +637,53 @@ footer {
         color: $heading;
         margin-bottom: 50px;
     }
+    
+}.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Ajoute un espace entre chaque projet */
 }
+
 .project {
     display: flex;
-    align-items: center; /* Alignement vertical */
-    justify-content: flex-start; /* Aligner à gauche */
-    gap: 30px; /* Espace entre image et texte */
-    padding: 30px; /* Ajoute de l'espace autour */
+    align-items: stretch; /* Assure que toutes les cases ont la même hauteur */
+    justify-content: flex-start;
+    gap: 20px; /* Espace entre l’image et le texte */
+    padding: 20px;
 }
 
-.project-image {
-    width: 250px; /* Taille uniforme pour éviter les décalages */
+.project-image img {
+    width: 150px;
     height: auto;
-    object-fit: cover;
-}
-
-.project-image img{
-    width: 250px; /* Taille uniforme pour éviter les décalages */
-    height: auto;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .project-info {
-    flex: 1; /* Prend tout l'espace restant */
-    max-width: 600px; /* Ajuste selon le besoin */
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centre les textes verticalement */
+    justify-content: flex-start; /* Aligne le texte en haut */
+    flex: 1; /* Prend toute la largeur restante */
     text-align: left;
-    padding: 30px;
 }
 
-/* Alignement parfait du texte */
 .project-info h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
+    margin: 0 0 10px 0; /* Supprime le margin-top pour éviter les décalages */
+    font-size: 1.5em;
 }
 
-/* Corrige l'espacement sous "View Project" */
+.project-info p {
+    flex-grow: 1; /* Permet au texte de prendre l’espace dispo sans étirer le bouton */
+    margin: 0 0 15px 0;
+}
+
 .project-info a {
-    margin-top: auto; /* Pousse "View Project" vers le bas */
-    margin-bottom: 20px; /* Ajoute de l'espace sous le lien */
+    align-self: flex-start; /* Aligne "View Project" à gauche */
+    padding: 10px 15px;
+    margin-bottom: 10px; /* Ajoute de l’espace sous le bouton */
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
 }
 
 
