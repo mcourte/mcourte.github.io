@@ -640,34 +640,40 @@ footer {
 }
 .project {
     display: flex;
-    align-items: center;
+    align-items: center; /* Alignement vertical */
     justify-content: flex-start; /* Aligner à gauche */
-    gap: 30px;
+    gap: 30px; /* Espace entre image et texte */
+    padding: 30px; /* Ajoute de l'espace autour */
 }
 
-/* Forcer toutes les images à une même largeur pour éviter les décalages */
 .project-image img {
-    width: 250px; /* Ajuste selon le besoin */
+    width: 150px; /* Taille uniforme pour éviter les décalages */
     height: auto;
+    object-fit: cover;
 }
 
-/* S'assurer que .project-info prend bien toute la hauteur possible */
 .project-info {
-    flex-grow: 1; /* Remplit l’espace disponible */
-    max-width: 600px;
-    min-height: 200px; /* Même hauteur pour tous */
+    flex: 1; /* Prend tout l'espace restant */
+    max-width: 600px; /* Ajuste selon le besoin */
     display: flex;
     flex-direction: column;
     justify-content: center; /* Centre les textes verticalement */
-    padding: 30px;
     text-align: left;
+    padding: 30px;
+}
+
+/* Alignement parfait du texte */
+.project-info h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
 }
 
 /* Corrige l'espacement sous "View Project" */
 .project-info a {
-    display: inline-block;
-    margin-bottom: 20px;
+    margin-top: auto; /* Pousse "View Project" vers le bas */
+    margin-bottom: 20px; /* Ajoute de l'espace sous le lien */
 }
+
 
 .no-image {
     .project-info {
