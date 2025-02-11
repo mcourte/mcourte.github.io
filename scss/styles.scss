@@ -661,19 +661,6 @@ footer {
     justify-content: center; /* Centre les textes verticalement */
     padding: 30px;
     text-align: left;
-
-    h3 {
-        font-size: 1.5em;
-        font-weight: 300;
-        color: $heading;
-        margin-bottom: 15px;
-    }
-
-    p {
-        font-size: 0.9em;
-        color: $text;
-        margin-bottom: 20px;
-    }
 }
 
 /* Corrige l'espacement sous "View Project" */
