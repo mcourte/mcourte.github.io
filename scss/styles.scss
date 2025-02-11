@@ -638,31 +638,30 @@ footer {
         margin-bottom: 50px;
     }
 }
-
 .project {
     display: flex;
-    align-items: center; /* Centre verticalement l’image et le texte */
-    justify-content: center; /* Centre l’ensemble */
-    gap: 30px; /* Espace entre l’image et le texte */
+    align-items: center;
+    justify-content: flex-start; /* Aligner à gauche */
+    gap: 30px;
 }
 
+/* Forcer toutes les images à une même largeur pour éviter les décalages */
 .project-image img {
-    max-width: 100%;
+    width: 250px; /* Ajuste selon le besoin */
     height: auto;
-    margin: 30px; /* Ajoute un espace autour de l’image */
 }
 
+/* S'assurer que .project-info prend bien toute la hauteur possible */
 .project-info {
-    flex: 1; /* Permet au texte d'occuper tout l'espace disponible */
-    max-width: 600px; /* Même largeur que .shadow-large */
-    min-height: 250px; /* Correction de la hauteur */
+    flex-grow: 1; /* Remplit l’espace disponible */
+    max-width: 600px;
+    min-height: 200px; /* Même hauteur pour tous */
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centre verticalement le texte */
+    justify-content: center; /* Centre les textes verticalement */
     padding: 30px;
-    text-align: center; /* Centre le texte */
-    box-shadow: 0 3px 6px rgba(0,0,0,0.08), 0 3px 6px rgba(0,0,0,0.15); /* Applique la même ombre que .shadow-large */
-    
+    text-align: left;
+
     h3 {
         font-size: 1.5em;
         font-weight: 300;
@@ -675,6 +674,12 @@ footer {
         color: $text;
         margin-bottom: 20px;
     }
+}
+
+/* Corrige l'espacement sous "View Project" */
+.project-info a {
+    display: inline-block;
+    margin-bottom: 20px;
 }
 
 .no-image {
