@@ -643,7 +643,7 @@ footer {
 .project {
     display: flex;
     align-items: stretch; /* Assure que toutes les cases ont la même hauteur */
-    justify-content: flex-start;
+    justify-content: center;
     gap: 20px; /* Espace entre l’image et le texte */
     padding: 20px;
 }
@@ -658,7 +658,7 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: flex-start; /* Aligne le texte en haut */
-    text-align: left;
+    text-align: center;
     max-width: 900px;
 }
 
