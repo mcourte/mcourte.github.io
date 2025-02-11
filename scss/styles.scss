@@ -637,11 +637,7 @@ footer {
         color: $heading;
         margin-bottom: 50px;
     }
-    
-}.container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Ajoute un espace entre chaque projet */
+
 }
 
 .project {
@@ -652,8 +648,8 @@ footer {
     padding: 20px;
 }
 
-.project-image img {
-    width: 150px;
+.project-image {
+    width: 250px;
     height: auto;
     object-fit: contain;
 }
@@ -662,8 +658,8 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: flex-start; /* Aligne le texte en haut */
-    flex: 1; /* Prend toute la largeur restante */
     text-align: left;
+    max-width: 900px;
 }
 
 .project-info h3 {
@@ -750,12 +746,23 @@ footer {
         color: #fff;
         font-weight: 500;
     }
+    a {
+        margin: 0 0 15px 0;
+        color: #fff;
+        font-weight: 500;
+        text-decoration: none;
+    }
 }
 
 #contact-form {
     max-width: 500px;
     margin: 0 auto;
-
+    a {
+        margin: 0 0 15px 0;
+        color: #fff;
+        font-weight: 500;
+        text-decoration: none;
+    }
     input, textarea {
         display: block;
         width: 100%;
