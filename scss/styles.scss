@@ -642,40 +642,41 @@ footer {
 
 .project {
     display: flex;
-    flex-direction: column; /* Arrange image and info vertically */
-    align-items: center;    /* Center align them horizontally */
-    text-align: center;     /* Center text inside .project-info */
+    align-items: center;
+    justify-content: center; /* Centre l’ensemble */
+    gap: 30px; /* Espace entre l’image et le texte */
 }
 
 .project-image img {
-    max-width: 100%; /* Ensure images are responsive */
+    max-width: 100%;
     height: auto;
-    margin: 1rem; /* Add space between image and text */
+    margin: 30px; /* Assure un espacement autour de l'image */
 }
 
 .project-info {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-left: 300px;
-    margin-bottom: 10px;
-    padding: 15px;
-
+    width: 80%; /* Même largeur que .shadow-large */
+    max-width: 600px; /* Ajustable selon la taille souhaitée */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    text-align: center; /* Centre le texte */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.08), 0 3px 6px rgba(0,0,0,0.15); /* Applique la même ombre */
+    
     h3 {
         font-size: 1.5em;
         font-weight: 300;
-        position:center;
         color: $heading;
-        margin: 0 0 15px 0;
+        margin-bottom: 15px;
     }
 
     p {
-        color: $text;
-        position:center;
-        margin: 0 0 15px 0;
         font-size: 0.9em;
+        color: $text;
+        margin-bottom: 15px;
     }
 }
+
 
 .no-image {
     .project-info {
