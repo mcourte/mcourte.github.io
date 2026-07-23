@@ -1,283 +1,871 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
-
+<html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>My Portfolio</title>
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-    <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magali Courté — Software & Data Engineer</title>
+<meta name="description" content="Portfolio de Magali Courté, ingénieure logiciel en reconversion vers la Data Engineering. De la structure au code.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0d2440;
+    --bg-deep: #081627;
+    --bg-soft: #123159;
+    --paper: #f3ecdd;
+    --paper-dim: #e6dcc2;
+    --ink: #10233c;
+    --line: #d7edf9;
+    --line-dim: rgba(215,237,249,0.32);
+    --line-faint: rgba(215,237,249,0.12);
+    --amber: #e8a33d;
+    --amber-soft: rgba(232,163,61,0.16);
+    --amber-line: rgba(232,163,61,0.45);
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --sheet-radius: 3px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  body{
+    margin:0;
+    background:
+      linear-gradient(var(--bg-deep), var(--bg) 6%, var(--bg) 94%, var(--bg-deep));
+    color:var(--line);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--amber); color:var(--bg-deep); }
+
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+
+  .blueprint-grid{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(var(--line-faint) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-faint) 1px, transparent 1px),
+      linear-gradient(rgba(215,237,249,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(215,237,249,0.05) 1px, transparent 1px);
+    background-size: 88px 88px, 88px 88px, 22px 22px, 22px 22px;
+    opacity:.9;
+  }
+
+  .container{ max-width:1080px; margin:0 auto; padding:0 28px; position:relative; z-index:1; }
+
+  /* scroll progress = measuring tape */
+  .tape{
+    position:fixed; top:0; left:0; height:4px; width:100%; z-index:60;
+    background:var(--line-faint);
+  }
+  .tape-fill{
+    height:100%; width:0%; background:var(--amber);
+    position:relative;
+    transition:width .08s linear;
+  }
+  .tape-fill::after{
+    content:'';
+    position:absolute; right:-1px; top:-3px; width:1px; height:10px; background:var(--amber);
+  }
+
+  /* NAV */
+  header.nav{
+    position:fixed; top:4px; left:0; right:0; z-index:50;
+    background:rgba(8,22,39,.72);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-faint);
+  }
+  .nav-inner{
+    max-width:1080px; margin:0 auto; padding:14px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{
+    font-family:var(--font-mono); font-size:.85rem; letter-spacing:.03em;
+    display:flex; align-items:baseline; gap:8px; text-decoration:none; white-space:nowrap;
+  }
+  .brand b{ color:var(--line); font-weight:600; }
+  .brand span{ color:var(--amber); }
+  @media (max-width:480px){ .brand span{ display:none; } }
+  nav.links{ display:flex; gap:26px; list-style:none; margin:0; padding:0; }
+  nav.links a{
+    text-decoration:none; font-family:var(--font-mono); font-size:.8rem;
+    color:var(--line-dim); letter-spacing:.03em; position:relative; padding-bottom:3px;
+    transition:color .2s ease;
+  }
+  nav.links a:hover, nav.links a.active{ color:var(--amber); }
+  nav.links a.active::after{
+    content:''; position:absolute; left:0; bottom:-3px; width:100%; height:1px; background:var(--amber);
+  }
+  .menu-btn{
+    display:none; background:none; border:1px solid var(--line-dim); color:var(--line);
+    font-family:var(--font-mono); padding:6px 10px; border-radius:2px; cursor:pointer;
+  }
+
+  @media (max-width:820px){
+    nav.links{
+      position:fixed; top:52px; right:0; left:0; background:var(--bg-deep);
+      flex-direction:column; gap:0; border-bottom:1px solid var(--line-faint);
+      transform:translateY(-130%); transition:transform .3s ease; padding:6px 0;
+    }
+    nav.links.open{ transform:translateY(0); }
+    nav.links a{ padding:14px 28px; border-top:1px solid var(--line-faint); }
+    .menu-btn{ display:block; }
+  }
+
+  section{ position:relative; z-index:1; padding:120px 0 90px; }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:.78rem; color:var(--amber);
+    letter-spacing:.08em; margin:0 0 14px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:''; width:26px; height:1px; background:var(--amber-line); }
+  h2.title{
+    font-family:var(--font-display); font-size:clamp(1.7rem,3vw,2.4rem); margin:0 0 40px;
+    font-weight:600; color:var(--line);
+  }
+
+  /* HERO */
+  #hero{
+    min-height:100svh; display:flex; align-items:center; padding-top:150px; padding-bottom:60px;
+    position:relative; overflow:hidden;
+  }
+  @media (max-width:600px){ #hero{ padding-top:130px; } }
+  .crosshair{
+    position:absolute; width:26px; height:26px; pointer-events:none;
+    border:1px solid var(--amber-line); border-radius:50%;
+    transform:translate(-50%,-50%);
+    display:none;
+  }
+  .crosshair::before, .crosshair::after{
+    content:''; position:absolute; background:var(--amber-line);
+  }
+  .crosshair::before{ left:50%; top:-9px; width:1px; height:8px; }
+  .crosshair::after{ left:50%; bottom:-9px; width:1px; height:8px; }
+  .coord-readout{
+    position:absolute; font-family:var(--font-mono); font-size:.68rem; color:var(--amber);
+    transform:translate(16px,-8px); white-space:nowrap; opacity:.85;
+  }
+  @media (min-width:821px){ .crosshair{ display:block; } }
+
+  .status-line{
+    font-family:var(--font-mono); font-size:.82rem; color:var(--line-dim);
+    display:flex; align-items:center; gap:8px; margin-bottom:26px;
+  }
+  .status-dot{ width:7px; height:7px; border-radius:50%; background:#5ee08a; box-shadow:0 0 8px #5ee08a; }
+
+  .hero-name{
+    font-family:var(--font-display); font-weight:700; margin:0;
+    font-size:clamp(2.6rem,7vw,5rem); line-height:1.02; color:var(--line);
+  }
+  .hero-name .word{
+    display:inline-block; overflow:hidden; vertical-align:top;
+  }
+  .hero-name .word span{
+    display:inline-block; transform:translateY(110%);
+    animation:riseUp .7s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  .hero-name .word:nth-child(2) span{ animation-delay:.12s; color:var(--amber); }
+  @keyframes riseUp{ to{ transform:translateY(0); } }
+
+  .hero-rule{
+    margin:22px 0 26px; width:min(560px,90%);
+  }
+  .hero-rule svg{ width:100%; height:16px; display:block; }
+  .hero-rule path{
+    stroke:var(--amber-line); stroke-width:1; fill:none;
+    stroke-dasharray:600; stroke-dashoffset:600;
+    animation:draw 1.2s .5s ease forwards;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+
+  .hero-role{
+    font-family:var(--font-mono); font-size:1.05rem; color:var(--line-dim); margin:0 0 22px;
+    max-width:640px;
+  }
+  .hero-role b{ color:var(--line); font-weight:600; }
+
+  .stat-row{ display:flex; flex-wrap:wrap; gap:12px; margin:0 0 32px; }
+  .stat-chip{
+    font-family:var(--font-mono); font-size:.76rem; color:var(--line);
+    border:1px solid var(--line-faint); padding:8px 12px; border-radius:2px;
+    background:rgba(215,237,249,0.03);
+  }
+  .stat-chip b{ color:var(--amber); }
+
+  .cta-row{ display:flex; flex-wrap:wrap; gap:14px; }
+  .btn{
+    font-family:var(--font-mono); font-size:.85rem; text-decoration:none;
+    padding:13px 22px; border-radius:2px; border:1px solid var(--line-dim);
+    color:var(--line); transition:all .2s ease; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn:hover{ border-color:var(--amber); color:var(--amber); transform:translateY(-2px); }
+  .btn.primary{ background:var(--amber); color:var(--bg-deep); border-color:var(--amber); font-weight:600; }
+  .btn.primary:hover{ background:transparent; color:var(--amber); }
+
+  .scroll-cue{
+    position:absolute; bottom:34px; left:50%; transform:translateX(-50%);
+    font-family:var(--font-mono); font-size:.68rem; color:var(--line-dim);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    letter-spacing:.15em;
+  }
+  .scroll-cue .stick{ width:1px; height:34px; background:linear-gradient(var(--line-dim), transparent); animation:stickPulse 1.8s ease-in-out infinite; }
+  @keyframes stickPulse{ 0%,100%{ opacity:.3 } 50%{ opacity:1 } }
+
+  /* ABOUT */
+  .about-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:start; }
+  @media (max-width:820px){ .about-grid{ grid-template-columns:1fr; } }
+  .about-text p{ color:var(--line-dim); font-size:1rem; margin:0 0 16px; }
+  .about-text strong{ color:var(--line); }
+  .quote-block{
+    font-family:var(--font-display); font-size:1.25rem; color:var(--line);
+    border-left:2px solid var(--amber); padding-left:20px; margin:22px 0 0;
+  }
+  .id-card{
+    background:var(--paper); color:var(--ink); border-radius:var(--sheet-radius);
+    padding:24px 24px 18px; font-family:var(--font-mono); font-size:.8rem;
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
+    position:relative;
+  }
+  .id-card::before{
+    content:'FICHE PROFIL'; position:absolute; top:-11px; left:20px; background:var(--amber);
+    color:var(--bg-deep); font-size:.65rem; padding:3px 10px; letter-spacing:.08em; font-weight:600;
+    border-radius:2px;
+  }
+  .id-row{ display:flex; justify-content:space-between; gap:12px; padding:9px 0; border-bottom:1px dashed rgba(16,35,60,.2); }
+  .id-row:last-child{ border-bottom:none; }
+  .id-row span:first-child{ color:rgba(16,35,60,.55); }
+  .id-row span:last-child{ text-align:right; font-weight:600; }
+
+  /* LAYERS / SKILLS */
+  .layers-wrap{ display:grid; grid-template-columns:1fr 1.15fr; gap:50px; align-items:center; }
+  @media (max-width:900px){ .layers-wrap{ grid-template-columns:1fr; } }
+
+  .layer-list{ list-style:none; margin:0; padding:0; }
+  .layer-item{
+    display:flex; align-items:flex-start; gap:14px; padding:14px 12px;
+    border:1px solid transparent; border-radius:3px; cursor:pointer;
+    transition:background .2s ease, border-color .2s ease; user-select:none;
+  }
+  .layer-item:hover{ background:rgba(215,237,249,0.04); }
+  .layer-item.active{ border-color:var(--line-faint); background:rgba(232,163,61,0.05); }
+  .layer-checkbox{
+    width:16px; height:16px; border:1px solid var(--line-dim); border-radius:2px;
+    flex:none; margin-top:3px; position:relative; transition:all .2s ease;
+  }
+  .layer-item.active .layer-checkbox{ background:var(--amber); border-color:var(--amber); }
+  .layer-item.active .layer-checkbox::after{
+    content:''; position:absolute; left:4px; top:1px; width:4px; height:8px;
+    border:solid var(--bg-deep); border-width:0 2px 2px 0; transform:rotate(45deg);
+  }
+  .layer-name{ font-family:var(--font-mono); font-size:.92rem; color:var(--line); display:block; }
+  .layer-item.active .layer-name{ color:var(--amber); }
+  .layer-desc{ font-size:.82rem; color:var(--line-dim); margin-top:3px; }
+  .layer-tags{ font-family:var(--font-mono); font-size:.7rem; color:var(--line-dim); margin-top:5px; }
+
+  .layer-illustration{
+    background:rgba(215,237,249,0.03); border:1px solid var(--line-faint); border-radius:4px;
+    padding:20px;
+  }
+  .layer-illustration svg{ width:100%; height:auto; display:block; }
+  .layer-band{ transition:opacity .35s ease, transform .35s ease; transform-origin:left center; }
+  .layer-band.off{ opacity:.08; transform:translateX(14px); }
+  .layer-label-svg{ font-family:'IBM Plex Mono', monospace; }
+  .caption{ font-family:var(--font-mono); font-size:.7rem; color:var(--line-dim); text-align:center; margin-top:10px; letter-spacing:.05em; }
+
+  /* TIMELINE (dimension line) */
+  .timeline{ position:relative; padding-left:34px; }
+  .timeline::before{
+    content:''; position:absolute; left:6px; top:6px; bottom:6px; width:1px; background:var(--line-dim);
+  }
+  .timeline::after{
+    content:''; position:absolute; left:2px; bottom:0; width:9px; height:9px;
+    border-left:1px solid var(--line-dim); border-bottom:1px solid var(--line-dim);
+  }
+  .t-item{ position:relative; margin-bottom:6px; }
+  .t-tick{
+    position:absolute; left:-34px; top:22px; width:24px; height:1px; background:var(--line-dim);
+  }
+  .t-dot{
+    position:absolute; left:1px; top:20px; width:11px; height:11px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--line-dim); transition:border-color .2s ease, background .2s ease;
+  }
+  .t-item[data-type="formation"] .t-dot{ border-color:var(--amber); }
+  .t-header{
+    cursor:pointer; padding:14px 18px; border:1px solid var(--line-faint); border-radius:3px;
+    display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .t-header:hover{ border-color:var(--line-dim); background:rgba(215,237,249,0.03); }
+  .t-item.open .t-header{ border-color:var(--amber-line); background:rgba(232,163,61,0.06); }
+  .t-head-left{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
+  .t-year{ font-family:var(--font-mono); font-size:.78rem; color:var(--amber); white-space:nowrap; }
+  .t-role{ font-family:var(--font-display); font-weight:600; color:var(--line); font-size:1.02rem; }
+  .t-org{ font-family:var(--font-mono); font-size:.75rem; color:var(--line-dim); }
+  .t-toggle{ font-family:var(--font-mono); color:var(--line-dim); font-size:.9rem; transition:transform .25s ease; }
+  .t-item.open .t-toggle{ transform:rotate(45deg); color:var(--amber); }
+  .t-body{
+    max-height:0; overflow:hidden; transition:max-height .35s ease;
+  }
+  .t-item.open .t-body{ max-height:420px; }
+  .t-body-inner{ padding:16px 20px 4px; }
+  .t-body-inner ul{ margin:0 0 12px; padding-left:18px; color:var(--line-dim); font-size:.9rem; }
+  .t-body-inner ul li{ margin-bottom:6px; }
+  .t-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+  .t-tag{
+    font-family:var(--font-mono); font-size:.68rem; color:var(--line);
+    border:1px solid var(--line-faint); padding:4px 9px; border-radius:2px;
+  }
+  .type-badge{
+    font-family:var(--font-mono); font-size:.65rem; padding:3px 8px; border-radius:2px;
+    border:1px solid var(--amber-line); color:var(--amber);
+  }
+  .t-item[data-type="experience"] .type-badge{ border-color:var(--line-dim); color:var(--line-dim); }
+
+  /* PROJECTS */
+  .proj-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+  @media (max-width:900px){ .proj-grid{ grid-template-columns:1fr; } }
+  .proj-card{
+    border:1px solid var(--line-faint); border-radius:4px; overflow:hidden;
+    background:rgba(215,237,249,0.02); text-decoration:none; color:inherit;
+    display:flex; flex-direction:column; position:relative;
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .proj-card:hover{ transform:translateY(-6px); border-color:var(--amber-line); }
+  .proj-thumb{ position:relative; aspect-ratio:16/10; overflow:hidden; background:var(--bg-deep); }
+  .proj-thumb img{ width:100%; height:100%; object-fit:cover; filter:grayscale(85%) brightness(.85); transition:filter .4s ease, transform .4s ease; }
+  .proj-card:hover .proj-thumb img{ filter:grayscale(0%) brightness(1); transform:scale(1.04); }
+  .proj-sheet{
+    position:absolute; top:10px; left:10px; font-family:var(--font-mono); font-size:.65rem;
+    background:rgba(8,22,39,.75); color:var(--amber); padding:3px 8px; border-radius:2px;
+    border:1px solid var(--amber-line);
+  }
+  .proj-body{ padding:18px 20px 20px; flex:1; display:flex; flex-direction:column; }
+  .proj-body h3{ font-family:var(--font-display); font-size:1.08rem; margin:0 0 8px; color:var(--line); }
+  .proj-body p{ font-size:.87rem; color:var(--line-dim); margin:0 0 14px; flex:1; }
+  .proj-tags{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+  .proj-tags span{ font-family:var(--font-mono); font-size:.65rem; border:1px solid var(--line-faint); padding:3px 8px; border-radius:2px; color:var(--line-dim); }
+  .proj-link{ font-family:var(--font-mono); font-size:.78rem; color:var(--amber); display:inline-flex; align-items:center; gap:6px; }
+  .proj-link .arrow{ transition:transform .2s ease; }
+  .proj-card:hover .proj-link .arrow{ transform:translateX(4px); }
+
+  /* CONTACT / TITLE BLOCK */
+  .titleblock{
+    border:1px solid var(--line-dim); border-radius:4px; overflow:hidden;
+  }
+  .tb-top{ display:grid; grid-template-columns:2fr 1fr 1fr; }
+  @media (max-width:700px){ .tb-top{ grid-template-columns:1fr; } }
+  .tb-cell{ padding:22px 24px; border-right:1px solid var(--line-faint); border-bottom:1px solid var(--line-faint); }
+  .tb-cell:last-child{ border-right:none; }
+  .tb-label{ font-family:var(--font-mono); font-size:.65rem; color:var(--line-dim); letter-spacing:.1em; margin-bottom:8px; }
+  .tb-value{ font-family:var(--font-display); font-size:1.15rem; color:var(--line); font-weight:600; }
+  .tb-value.small{ font-size:.95rem; font-weight:400; font-family:var(--font-mono); }
+  .tb-links{ display:grid; grid-template-columns:repeat(2,1fr); }
+  @media (max-width:700px){ .tb-links{ grid-template-columns:1fr; } }
+  .tb-link{
+    padding:20px 24px; text-decoration:none; color:var(--line); display:flex; flex-direction:column; gap:5px;
+    border-right:1px solid var(--line-faint); border-bottom:1px solid var(--line-faint);
+    transition:background .2s ease;
+  }
+  .tb-link:hover{ background:rgba(232,163,61,0.06); }
+  .tb-link:nth-child(2n){ border-right:none; }
+  .tb-link small{ font-family:var(--font-mono); font-size:.65rem; color:var(--amber); letter-spacing:.08em; }
+  .tb-link strong{ font-size:.95rem; word-break:break-word; }
+
+  footer{
+    padding:34px 0 50px; text-align:center; font-family:var(--font-mono); font-size:.72rem; color:var(--line-dim);
+  }
+  footer .rule{ width:60px; height:1px; background:var(--line-faint); margin:0 auto 18px; }
+
+  .fade-up{ opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
+  .fade-up.in{ opacity:1; transform:translateY(0); }
+</style>
 </head>
-
 <body>
-    <div id="mobile-menu-open" class="shadow-large">
-        <i class="fa fa-bars" aria-hidden="true"></i>
+
+<div class="blueprint-grid" aria-hidden="true"></div>
+<div class="tape"><div class="tape-fill" id="tapeFill"></div></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="brand"><b>Magali Courté</b><span>— Data Engineer</span></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Ouvrir le menu">☰</button>
+    <ul class="links" id="navLinks">
+      <li><a href="#about" data-nav>A-01 À propos</a></li>
+      <li><a href="#layers" data-nav>A-02 Compétences</a></li>
+      <li><a href="#parcours" data-nav>A-03 Parcours</a></li>
+      <li><a href="#projets" data-nav>A-04 Projets</a></li>
+      <li><a href="#contact" data-nav>A-05 Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="status-line"><span class="status-dot"></span> disponible pour de nouveaux projets — France</div>
+
+    <h1 class="hero-name">
+      <span class="word"><span>Magali</span></span><br>
+      <span class="word"><span>Courté</span></span>
+    </h1>
+
+    <div class="hero-rule">
+      <svg viewBox="0 0 600 16" preserveAspectRatio="none">
+        <path d="M0,8 L590,8 M0,2 L0,14 M590,2 L590,14"></path>
+      </svg>
     </div>
-    <!-- End #mobile-menu-toggle -->
-    <header>
-        <div id="mobile-menu-close">
-            <span>Close</span> <i class="fa fa-times" aria-hidden="true"></i>
-        </div>
-        <ul id="menu" class="shadow">
-            <li>
-                <a href="#about">About</a>
-            </li>
-            <li>
-                <a href="#projects">Projects</a>
-            </li>
-            <li>
-                <a href="#skills">Skills</a>
-            </li>
-            <li>
-                <a href="#education">Education</a>
-            </li>
-            <li>
-                <a href="#experience">Experience</a>
-            </li>
 
-            <li>
-                <a href="#contact">Contact</a>
-            </li>
-        </ul>
-    </header>
-    <!-- End header -->
+    <p class="hero-role">
+      <b>Data Engineer en formation, spécialisation IA.</b> Après 10 ans à concevoir des ouvrages dans le BTP, je conçois aujourd'hui des pipelines de données et des solutions d'intelligence artificielle en alternance — même rigueur, nouveau matériau : le code.
+    </p>
 
-    <div id="lead">
-        <div id="lead-content">
-            <h1>Magali Courté</h1>
-            <h2>Software Engineer</h2>
-            <a href="CV-MCO.pdf" download="CV-MCO.pdf" class="btn-rounded-white">Download Resume</a>
-        </div>
-        <!-- End #lead-content -->
-
-        <div id="lead-overlay"></div>
-
-        <div id="lead-down">
-            <span>
-                <i class="fa fa-chevron-down" aria-hidden="true"></i>
-            </span>
-        </div>
-        <!-- End #lead-down -->
+    <div class="stat-row">
+      <div class="stat-chip"><b>10 ans</b> — génie civil &amp; BTP</div>
+      <div class="stat-chip"><b>RNCP 7</b> — Data Engineer, en cours</div>
+      <div class="stat-chip"><b>IA</b> — au cœur de l'alternance</div>
+      <div class="stat-chip"><b>Python</b> — spécialisation principale</div>
+      <div class="stat-chip"><b>Azure</b> &amp; Snowflake &amp; Dataiku</div>
     </div>
-    <!-- End #lead -->
 
-    <div id="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h2 class="heading">About Me</h2>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                        After 10 years as an engineer in construction, I moved into the field of IT development. Passionate about creating software and solving problems, I chose to specialize in Python. Having graduated as a software developer and designer, I am looking to expand my skills and contribute to interesting projects.
-                    </p>
-                </div>
-            </div>
-        </div>
+    <div class="cta-row">
+      <a class="btn primary" href="CV-MCO.pdf">↓ Télécharger le CV</a>
+      <a class="btn" href="#projets">Voir les projets</a>
+      <a class="btn" href="#contact">Me contacter</a>
     </div>
-    <!-- End #about -->
-    <div id="projects" class="background-alt">
-        <h2 class="heading">Projects</h2>
-        <div class="container">
-            <div class="row">
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <img src="https://mcourte.github.io/images/project1.png" alt="Project Image"/>
-                    </div>
-                    <!-- End .project-image -->
-                    <div class="project-info">
-                        <h3>Analyse Sales E-commerce</h3>
-                        <p>
-                            Personnel project, with dataset from kaggle.net
-                        </p>
-                        <a href="https://github.com/mcourte/DA_shoppingtrends/tree/main">View Project</a>
-                    </div>
-                    <!-- End .project-info -->
-                </div>
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <img src="https://mcourte.github.io/images/project4.png" alt="Project Image"/>
-                    </div>
-                    <!-- End .project-image -->
-                    <div class="project-info">
-                        <h3>Website Django</h3>
-                        <p>
-                            Creation of a website allowing you to request and post reviews of articles or books with Django
-                        </p>
-                        <a href="https://github.com/mcourte/OC_Projet9">View Project</a>
-                    </div>
-                    <!-- End .project-info -->
-                </div>
+  </div>
+  <div class="scroll-cue"><span>SCROLL</span><span class="stick"></span></div>
+  <div class="crosshair" id="crosshair"><span class="coord-readout" id="coordReadout"></span></div>
+</section>
 
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <img src="https://mcourte.github.io/images/project2.png" alt="Project Image"/>
-                    </div>
-                    <!-- End .project-image -->
-                    <div class="project-info">
-                        <h3>All my Projets</h3>
-                        <p>
-                            See all my projects on my GitHub. (API REST, Data Analysis, Command-line application)
-                        </p>
-                        <a href="https://github.com/mcourte">View Projects</a>
-                    </div>
-                    <!-- End .project-info -->
-                </div>
-                <!-- End .project -->
-            </div>
-        </div>
-    </div>  
-    <!-- End #projects -->
-
-
-    <div id="skills">
-        <h2 class="heading">Skills</h2>
-        <ul>
-            <li>Python</li>
-            <li>GitHub</li>
-            <li>CI/CD</li>
-            <li>Microsoft Azure</li>
-			<li>Snowflake</li>
-			<li>Dataiku</li>
-            <li>Jupyter Notebook</li>
-
-        </ul>
+<!-- ABOUT -->
+<section id="about">
+  <div class="container fade-up">
+    <p class="eyebrow">01 — à propos</p>
+    <h2 class="title">D'un chantier à l'autre</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Pendant <strong>dix ans</strong>, j'ai conçu et chiffré des ouvrages de génie civil : modélisation 3D sous REVIT, chiffrage de tender, coordination de sous-traitants. Un métier qui apprend une chose essentielle — <strong>une structure ne tient que si ses fondations sont exactes.</strong></p>
+        <p>J'ai transporté cette exigence vers le développement logiciel. Diplômée <strong>développeuse et conceptrice de logiciels</strong>, je me spécialise désormais en <strong>Python</strong> et poursuis actuellement une formation <strong>Data Engineer (RNCP niveau 7)</strong>. En alternance, je travaille au quotidien sur des projets d'<strong>intelligence artificielle</strong>, avec le même goût pour les architectures propres et les problèmes bien posés.</p>
+        <p>Je cherche aujourd'hui à rejoindre des projets où cette double culture — <strong>rigueur d'ingénieure, curiosité de développeuse</strong> — peut faire la différence.</p>
+        <div class="quote-block">« Construire du solide — que ce soit en béton ou en pipelines. »</div>
+      </div>
+      <div class="id-card">
+        <div class="id-row"><span>Nom</span><span>Magali Courté</span></div>
+        <div class="id-row"><span>Rôle</span><span>Software / Data Engineer</span></div>
+        <div class="id-row"><span>Origine</span><span>Génie civil &amp; BTP</span></div>
+        <div class="id-row"><span>Formation</span><span>RNCP 7 — en cours</span></div>
+        <div class="id-row"><span>Alternance</span><span>Intelligence Artificielle</span></div>
+        <div class="id-row"><span>Stack principale</span><span>Python</span></div>
+        <div class="id-row"><span>Cloud</span><span>Microsoft Azure</span></div>
+        <div class="id-row"><span>Localisation</span><span>France</span></div>
+        <div class="id-row"><span>Disponibilité</span><span>Sur demande</span></div>
+      </div>
     </div>
-    <!-- End #skills -->
+  </div>
+</section>
 
-    <div id="education">
-        <h2 class="heading">Education</h2>
-		        <div class="education-block">
-            <h3>OpenClassroom </h3>
-            <span class="education-date">June 2025 - Present</span>
-            <h4>Data Engineer </h4>
-            <p>
-                Diploma (RNCP Level 7)
-            </p>
-        </div>
-        <div class="education-block">
-            <h3>OpenClassroom </h3>
-            <span class="education-date">Sept 2023 - Sept 2024</span>
-            <h4>Python Software Developer </h4>
-            <p>
-                Diploma (RNCP Level 6)
-            </p>
-        </div>
-        <!-- End .education-block -->
+<!-- LAYERS / SKILLS -->
+<section id="layers">
+  <div class="container fade-up">
+    <p class="eyebrow">02 — compétences</p>
+    <h2 class="title">Une compétence par couche</h2>
+    <div class="layers-wrap">
+      <ul class="layer-list" id="layerList">
+        <li class="layer-item active" data-layer="foundation">
+          <span class="layer-checkbox"></span>
+          <div>
+            <span class="layer-name">Fondations — Python</span>
+            <div class="layer-desc">Le langage porteur de tous mes projets, du script au pipeline.</div>
+            <div class="layer-tags">Python · scripts · automatisation</div>
+          </div>
+        </li>
+        <li class="layer-item active" data-layer="structure">
+          <span class="layer-checkbox"></span>
+          <div>
+            <span class="layer-name">Structure — Versioning &amp; CI/CD</span>
+            <div class="layer-desc">Le squelette qui garantit qu'un projet tient dans la durée.</div>
+            <div class="layer-tags">GitHub · CI/CD</div>
+          </div>
+        </li>
+        <li class="layer-item active" data-layer="systems">
+          <span class="layer-checkbox"></span>
+          <div>
+            <span class="layer-name">Systèmes — Cloud &amp; entrepôts de données</span>
+            <div class="layer-desc">L'infrastructure qui fait circuler la donnée.</div>
+            <div class="layer-tags">Microsoft Azure · Snowflake</div>
+          </div>
+        </li>
+        <li class="layer-item active" data-layer="ia">
+          <span class="layer-checkbox"></span>
+          <div>
+            <span class="layer-name">Intelligence Artificielle</span>
+            <div class="layer-desc">Le cœur de mon alternance actuelle.</div>
+            <div class="layer-tags">IA générative · Machine Learning</div>
+          </div>
+        </li>
+        <li class="layer-item active" data-layer="finishing">
+          <span class="layer-checkbox"></span>
+          <div>
+            <span class="layer-name">Finitions — Analyse &amp; visualisation</span>
+            <div class="layer-desc">Là où la donnée devient lisible et utile.</div>
+            <div class="layer-tags">Dataiku · Jupyter Notebook</div>
+          </div>
+        </li>
+      </ul>
 
-        <div class="education-block">
-            <h3>Ecole Centrale de Nantes </h3>
-            <span class="education-date">Sept 2012 - Sept 2016</span>
-            <h4>Civil Engineering and Public Works Engineering Degree </h4>
-
-        </div>
-        <!-- End .education-block -->
+      <div class="layer-illustration">
+        <svg viewBox="0 0 360 310" id="layerSvg">
+          <g class="layer-band" data-layer="finishing">
+            <rect x="20" y="20" width="320" height="46" rx="3" fill="rgba(232,163,61,0.14)" stroke="#e8a33d" stroke-width="1"/>
+            <text x="36" y="48" class="layer-label-svg" fill="#e8a33d" font-size="13">✨ Finitions — Analyse &amp; viz</text>
+          </g>
+          <g class="layer-band" data-layer="ia">
+            <rect x="20" y="76" width="320" height="46" rx="3" fill="rgba(232,163,61,0.14)" stroke="#e8a33d" stroke-width="1"/>
+            <text x="36" y="104" class="layer-label-svg" fill="#e8a33d" font-size="13">🤖 IA — spécialisation en alternance</text>
+          </g>
+          <g class="layer-band" data-layer="systems">
+            <rect x="20" y="132" width="320" height="46" rx="3" fill="rgba(215,237,249,0.06)" stroke="#d7edf9" stroke-opacity="0.5" stroke-width="1"/>
+            <text x="36" y="160" class="layer-label-svg" fill="#d7edf9" font-size="13">☁ Systèmes — Azure &amp; Snowflake</text>
+          </g>
+          <g class="layer-band" data-layer="structure">
+            <rect x="20" y="188" width="320" height="46" rx="3" fill="rgba(215,237,249,0.06)" stroke="#d7edf9" stroke-opacity="0.5" stroke-width="1"/>
+            <text x="36" y="216" class="layer-label-svg" fill="#d7edf9" font-size="13">🔧 Structure — Git &amp; CI/CD</text>
+          </g>
+          <g class="layer-band" data-layer="foundation">
+            <rect x="20" y="244" width="320" height="46" rx="3" fill="rgba(232,163,61,0.18)" stroke="#e8a33d" stroke-width="1.4"/>
+            <text x="36" y="272" class="layer-label-svg" fill="#e8a33d" font-size="13">🐍 Fondations — Python</text>
+          </g>
+        </svg>
+        <p class="caption">cliquez une compétence pour masquer / afficher sa couche</p>
+      </div>
     </div>
-    <!-- End #education -->
+  </div>
+</section>
 
-    <div id="experience" class="background-alt">
-        <h2 class="heading">Experience</h2>
-        <div id="experience-timeline">
-			<div data-date="June 2025 – Present">
-			    <h3>Groupe Beaumanoir</h3>
-			    <h4>Software Developer & Project Manager (Apprenticeship)</h4>
-			    <p>
-			    <ul>
-			        <li>Software Development: Expanded an internal chatbot's scope by integrating 5 new companies, managing full deployment across Development, UAT, and Production.</li>
-			        <li>System Optimization: Standardized and streamlined data and API workflows across the entire internal chatbot ecosystem to improve maintainability.</li>
-			        <li>Project Management: Led the expansion of the HR chatbot, successfully integrating corporate headquarters documentation alongside the existing retail store network data.</li>
-			    </ul>
-			    </p>
-			</div>
-            <div data-date="October 2019 – April 2023">
-                <h3>Legendre Construction</h3>
-                <h4>BIM Modeleur</h4>
-                <p>
-                <ul>
-                
-                <li>Designed 3D models using REVIT software for structural and technical components.  </li>
-                <li>Specialized in buried network layouts, technical systems, and secondary work packages. </li>
-                <li>Contributed to optimizing designs for structural efficiency and compliance with project requirements.</li> 
-                </p>
-            </div>
+<!-- PARCOURS -->
+<section id="parcours">
+  <div class="container fade-up">
+    <p class="eyebrow">03 — parcours</p>
+    <h2 class="title">Relevé chronologique</h2>
 
-            <div data-date="February 2017 – October 2019">
-                <h3>Legendre Construction</h3>
-                <h4>Civil Engineering Cost Estimation Engineer</h4>
-                <p>
-                <ul>
-                <li>Analyzed tender documents and identified legal and technical risks.</li>
-                <li>Prepared cost estimates for structural works and secondary packages.</li> 
-                <li>Consulted subcontractors, conducted comparative analysis of bids, and allocated human and material resources.</li>
-                <li>Assisted in the creation of detailed technical documentation to support project proposals.</li> 
-                </ul>
-                </p>
-            </div>
+    <div class="timeline" id="timeline">
 
-            <div data-date="October 2012 – February 2017">
-                <h3>Spie Batignolles Ouest</h3>
-                <h4>Intern and Apprentice Engineer (Oct 2012/Oct 2016)
-                    Cost Estimation Engineer ( Oct 2016 - Feb 2017)</h4>
-                <p>
-                <ul>
-                <li>  Analyzed tender documents and identified legal and technical risks.</li>  
-                <li> Prepared cost estimates for structural works and secondary packages.</li>  
-                    <li> Consulted subcontractors, conducted comparative analysis of bids, and allocated human and material resources.</li>  
-                        <li> Assisted in the creation of detailed technical documentation to support project proposals.</li>  
- 
-                            <li><span> Final Year Project:</span></li>  
-                                <p> Developed a software tool to estimate potential savings and optimizations in thermal insulation for construction projects. </p>  
-                </ul>
-                </p>
-            </div>
+      <div class="t-item" data-type="formation">
+        <div class="t-tick"></div><div class="t-dot"></div>
+        <div class="t-header">
+          <div class="t-head-left">
+            <span class="t-year">juin 2025 — aujourd'hui</span>
+            <span class="t-role">Data Engineer — RNCP niveau 7</span>
+          </div>
+          <span class="type-badge">Formation</span>
+          <span class="t-toggle">+</span>
         </div>
+        <div class="t-body"><div class="t-body-inner">
+          <p style="color:var(--line-dim); font-size:.9rem; margin:0 0 12px;">OpenClassrooms — Diplôme Data Engineer, en cours de préparation.</p>
+          <div class="t-tags"><span class="t-tag">Python</span><span class="t-tag">Azure</span><span class="t-tag">Data pipelines</span><span class="t-tag">Snowflake</span></div>
+        </div></div>
+      </div>
+
+      <div class="t-item" data-type="experience">
+        <div class="t-tick"></div><div class="t-dot"></div>
+        <div class="t-header">
+          <div class="t-head-left">
+            <span class="t-year">2024 — 2025</span>
+            <span class="t-role">Software Developer &amp; Project Manager</span>
+            <span class="t-org">Groupe Beaumanoir · Apprentissage</span>
+          </div>
+          <span class="type-badge">Expérience</span>
+          <span class="t-toggle">+</span>
+        </div>
+        <div class="t-body"><div class="t-body-inner">
+          <ul>
+            <li>Développement logiciel : extension du périmètre d'un chatbot interne à 5 nouvelles enseignes, déploiement complet sur Dev, UAT et Production.</li>
+            <li>Optimisation système : standardisation des flux de données et API sur l'ensemble de l'écosystème chatbot pour améliorer la maintenabilité.</li>
+            <li>Gestion de projet : pilotage de l'extension du chatbot RH, intégration de la documentation du siège aux données du réseau de magasins.</li>
+          </ul>
+          <div class="t-tags"><span class="t-tag">Chatbot IA</span><span class="t-tag">API</span><span class="t-tag">Gestion de projet</span></div>
+        </div></div>
+      </div>
+
+      <div class="t-item" data-type="formation">
+        <div class="t-tick"></div><div class="t-dot"></div>
+        <div class="t-header">
+          <div class="t-head-left">
+            <span class="t-year">sept. 2023 — sept. 2024</span>
+            <span class="t-role">Développeuse logiciel Python — RNCP niveau 6</span>
+            <span class="t-org">OpenClassrooms</span>
+          </div>
+          <span class="type-badge">Formation</span>
+          <span class="t-toggle">+</span>
+        </div>
+        <div class="t-body"><div class="t-body-inner">
+          <p style="color:var(--line-dim); font-size:.9rem; margin:0 0 12px;">Diplôme de développeuse et conceptrice de logiciels, spécialisation Python.</p>
+          <div class="t-tags"><span class="t-tag">Python</span><span class="t-tag">Django</span><span class="t-tag">Bases de données</span></div>
+        </div></div>
+      </div>
+
+      <div class="t-item" data-type="experience">
+        <div class="t-tick"></div><div class="t-dot"></div>
+        <div class="t-header">
+          <div class="t-head-left">
+            <span class="t-year">2019 — 2023</span>
+            <span class="t-role">BIM Modeleur</span>
+            <span class="t-org">Legendre Construction</span>
+          </div>
+          <span class="type-badge">Expérience</span>
+          <span class="t-toggle">+</span>
+        </div>
+        <div class="t-body"><div class="t-body-inner">
+          <ul>
+            <li>Conception de modèles 3D sous REVIT pour les éléments structurels et techniques.</li>
+            <li>Spécialisation dans le tracé des réseaux enterrés, les systèmes techniques et les lots secondaires.</li>
+            <li>Contribution à l'optimisation des conceptions pour l'efficacité structurelle et la conformité au projet.</li>
+          </ul>
+          <div class="t-tags"><span class="t-tag">REVIT</span><span class="t-tag">BIM</span><span class="t-tag">Modélisation 3D</span></div>
+        </div></div>
+      </div>
+
+      <div class="t-item" data-type="experience">
+        <div class="t-tick"></div><div class="t-dot"></div>
+        <div class="t-header">
+          <div class="t-head-left">
+            <span class="t-year">2017 — 2019</span>
+            <span class="t-role">Ingénieure chiffrage — génie civil</span>
+            <span class="t-org">Legendre Construction</span>
+          </div>
+          <span class="type-badge">Expérience</span>
+          <span class="t-toggle">+</span>
+        </div>
+        <div class="t-body"><div class="t-body-inner">
+          <ul>
+            <li>Analyse des dossiers d'appel d'offres, identification des risques juridiques et techniques.</li>
+            <li>Préparation des estimations de coûts pour les ouvrages structurels et lots secondaires.</li>
+            <li>Consultation des sous-traitants, analyse comparative des offres, allocation des ressources humaines et matérielles.</li>
+            <li>Contribution à la rédaction de la documentation technique des propositions de projet.</li>
+          </ul>
+          <div class="t-tags"><span class="t-tag">Chiffrage</span><span class="t-tag">Appels d'offres</span></div>
+        </div></div>
+      </div>
+
+      <div class="t-item" data-type="experience">
+        <div class="t-tick"></div><div class="t-dot"></div>
+        <div class="t-header">
+          <div class="t-head-left">
+            <span class="t-year">oct. 2012 — fév. 2017</span>
+            <span class="t-role">Ingénieure stagiaire &amp; apprentie, puis chiffrage</span>
+            <span class="t-org">Spie Batignolles Ouest</span>
+          </div>
+          <span class="type-badge">Expérience</span>
+          <span class="t-toggle">+</span>
+        </div>
+        <div class="t-body"><div class="t-body-inner">
+          <ul>
+            <li>Analyse des dossiers d'appel d'offres et identification des risques juridiques et techniques.</li>
+            <li>Chiffrage des ouvrages structurels et lots secondaires ; comparatif des offres sous-traitants.</li>
+            <li>Projet de fin d'études : développement d'un outil logiciel d'estimation des économies et optimisations d'isolation thermique pour projets de construction — <em>ma première incursion dans le développement.</em></li>
+          </ul>
+          <div class="t-tags"><span class="t-tag">Chiffrage</span><span class="t-tag">Outil logiciel</span><span class="t-tag">Thermique</span></div>
+        </div></div>
+      </div>
+
+      <div class="t-item" data-type="formation">
+        <div class="t-tick"></div><div class="t-dot"></div>
+        <div class="t-header">
+          <div class="t-head-left">
+            <span class="t-year">sept. 2012 — sept. 2016</span>
+            <span class="t-role">Diplôme d'ingénieure — Génie civil &amp; Travaux publics</span>
+            <span class="t-org">École Centrale de Nantes</span>
+          </div>
+          <span class="type-badge">Formation</span>
+          <span class="t-toggle">+</span>
+        </div>
+        <div class="t-body"><div class="t-body-inner">
+          <p style="color:var(--line-dim); font-size:.9rem; margin:0 0 12px;">Formation d'ingénieure généraliste, spécialisation Génie civil et Travaux publics.</p>
+          <div class="t-tags"><span class="t-tag">Génie civil</span><span class="t-tag">Structures</span></div>
+        </div></div>
+      </div>
+
     </div>
-    <!-- End #experience -->
-    <div id="contact">
-        <h2>Contact me ! </h2>
-        <div id="contact-form">
-            <p><a href="mailto:courte.magali@gmail.com">courte.magali@gmail.com</a></p>
-            <p>+33 6 49 73 08 64</p>    
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projets">
+  <div class="container fade-up">
+    <p class="eyebrow">04 — projets</p>
+    <h2 class="title">Dossiers de projets</h2>
+    <div class="proj-grid">
+
+      <a class="proj-card" href="https://github.com/mcourte/DA_shoppingtrends/tree/main" target="_blank" rel="noopener">
+        <div class="proj-thumb">
+          <span class="proj-sheet">P-01</span>
+          <img src="images/project1.png" alt="Analyse des tendances de vente e-commerce" loading="lazy">
         </div>
-        <!-- End #contact-form -->
+        <div class="proj-body">
+          <h3>Analyse Sales E-commerce</h3>
+          <p>Projet personnel d'analyse de données à partir d'un jeu de données Kaggle — nettoyage, exploration et visualisation des tendances d'achat.</p>
+          <div class="proj-tags"><span>Python</span><span>Pandas</span><span>Data Analysis</span></div>
+          <span class="proj-link">Voir le projet <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a class="proj-card" href="https://github.com/mcourte/OC_Projet9" target="_blank" rel="noopener">
+        <div class="proj-thumb">
+          <span class="proj-sheet">P-02</span>
+          <img src="images/project4.png" alt="Site web Django" loading="lazy">
+        </div>
+        <div class="proj-body">
+          <h3>Site web Django</h3>
+          <p>Création d'un site permettant de demander et publier des critiques d'articles ou de livres, développé avec Django.</p>
+          <div class="proj-tags"><span>Python</span><span>Django</span><span>SQL</span></div>
+          <span class="proj-link">Voir le projet <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a class="proj-card" href="https://github.com/mcourte" target="_blank" rel="noopener">
+        <div class="proj-thumb">
+          <span class="proj-sheet">P-03</span>
+          <img src="images/project2.png" alt="Tous les projets sur GitHub" loading="lazy">
+        </div>
+        <div class="proj-body">
+          <h3>Tous mes projets</h3>
+          <p>Le reste de mes travaux sur GitHub : API REST, analyses de données, applications en ligne de commande.</p>
+          <div class="proj-tags"><span>REST API</span><span>Data</span><span>CLI</span></div>
+          <span class="proj-link">Voir le profil GitHub <span class="arrow">→</span></span>
+        </div>
+      </a>
+
     </div>
-    <!-- End #contact -->
+  </div>
+</section>
 
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-5 copyright">
-                    <p>
-                        Copyright &copy; <span id="current-year">2024</span> MAGALI COURTE
-                    </p>
-                </div>
-                <div class="col-sm-2 top">
-                    <span id="to-top">
-                        <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <div class="col-sm-5 social">
-                    <ul>
-                        <li>
-                            <a href="https://github.com/mcourte" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
-                        </li>
-                        <li>
-                            <a href="https://linkedin.com/magali.courté" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container fade-up">
+    <p class="eyebrow">05 — contact</p>
+    <h2 class="title">Cartouche de contact</h2>
+
+    <div class="titleblock">
+      <div class="tb-top">
+        <div class="tb-cell">
+          <div class="tb-label">DESSINÉ PAR</div>
+          <div class="tb-value">Magali Courté</div>
         </div>
-    </footer>
-    <!-- End footer -->
+        <div class="tb-cell">
+          <div class="tb-label">ÉCHELLE</div>
+          <div class="tb-value small">1:1 — sans filtre</div>
+        </div>
+        <div class="tb-cell">
+          <div class="tb-label">DISPONIBILITÉ</div>
+          <div class="tb-value small">Sur demande</div>
+        </div>
+      </div>
+      <div class="tb-links">
+        <a class="tb-link" href="mailto:courte.magali@gmail.com">
+          <small>EMAIL</small><strong>courte.magali@gmail.com</strong>
+        </a>
+        <a class="tb-link" href="tel:+33649730864">
+          <small>TÉLÉPHONE</small><strong>+33 6 49 73 08 64</strong>
+        </a>
+        <a class="tb-link" href="https://github.com/mcourte" target="_blank" rel="noopener">
+          <small>GITHUB</small><strong>github.com/mcourte</strong>
+        </a>
+        <a class="tb-link" href="https://www.linkedin.com/in/magali-courté" target="_blank" rel="noopener">
+          <small>LINKEDIN</small><strong>linkedin.com/in/magali-courté</strong>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/scripts.min.js"></script>
+<footer>
+  <div class="rule"></div>
+  © 2026 Magali Courté — construit avec HTML / CSS / JS, sans framework
+</footer>
+
+<script>
+  // scroll progress "tape"
+  const tapeFill = document.getElementById('tapeFill');
+  function updateTape(){
+    const h = document.documentElement;
+    const scrolled = h.scrollTop;
+    const max = h.scrollHeight - h.clientHeight;
+    tapeFill.style.width = (max > 0 ? (scrolled / max) * 100 : 0) + '%';
+  }
+  document.addEventListener('scroll', updateTape, { passive:true });
+  updateTape();
+
+  // mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // active nav link on scroll
+  const navA = document.querySelectorAll('[data-nav]');
+  const sections = Array.from(navA).map(a => document.querySelector(a.getAttribute('href')));
+  function updateActive(){
+    let idx = -1;
+    sections.forEach((sec, i) => {
+      if(sec && sec.getBoundingClientRect().top <= 140) idx = i;
+    });
+    navA.forEach((a,i) => a.classList.toggle('active', i === idx));
+  }
+  document.addEventListener('scroll', updateActive, { passive:true });
+  updateActive();
+
+  // fade-up on scroll
+  const faders = document.querySelectorAll('.fade-up');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:.15 });
+  faders.forEach(f => io.observe(f));
+
+  // hero crosshair follows mouse
+  const hero = document.getElementById('hero');
+  const crosshair = document.getElementById('crosshair');
+  const coordReadout = document.getElementById('coordReadout');
+  if(hero && crosshair){
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      crosshair.style.left = x + 'px';
+      crosshair.style.top = y + 'px';
+      coordReadout.textContent = 'X:' + Math.round(x) + ' Y:' + Math.round(y);
+    });
+    hero.addEventListener('mouseleave', () => { crosshair.style.left = '-100px'; });
+  }
+
+  // layers illustration toggle
+  const layerItems = document.querySelectorAll('.layer-item');
+  layerItems.forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('active');
+      const key = item.getAttribute('data-layer');
+      const band = document.querySelector('.layer-band[data-layer="' + key + '"]');
+      if(band) band.classList.toggle('off', !item.classList.contains('active'));
+    });
+  });
+
+  // timeline expand/collapse
+  document.querySelectorAll('.t-header').forEach(header => {
+    header.addEventListener('click', () => {
+      header.parentElement.classList.toggle('open');
+    });
+  });
+  // open first timeline item by default
+  const firstT = document.querySelector('.t-item');
+  if(firstT) firstT.classList.add('open');
+</script>
 </body>
-
 </html>
